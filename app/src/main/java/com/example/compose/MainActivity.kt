@@ -43,11 +43,28 @@ class MainActivity : ComponentActivity() {
                 Column (
                     modifier = Modifier
                         .height(90.dp)
-                        .fillMaxWidth()
+                        // This will fill 0.5 i.e 50% of the max width available. If no parameter
+                        // given, it has a default value of 1 i.e it'll take the maximum width.
+                        .fillMaxWidth(0.5f)
                         .background(Color.DarkGray)
                         .border(2.dp, Color.Black),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
+                ) {
+                    Greeting("there!!")
+                    Greeting("world!!")
+                    Greeting("earth")
+                }
+                // Parameters help give properties to a composable
+                Row (
+                    modifier = Modifier
+                        .height(90.dp)
+                        .fillMaxWidth()
+                        .background(Color.DarkGray)
+                        .border(2.dp, Color.Black),
+                    // Notice how for rows arrangement and alignments are switched.
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Greeting("there!!")
                     Greeting("world!!")
