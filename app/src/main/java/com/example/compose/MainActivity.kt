@@ -23,69 +23,41 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // set content sets the view for the current activity.
         setContent {
-            // If we don't place this here column and row will overlap
-            Column() {
-                // Places children one below the other. By default if you don't use column they will
-                // overlap
-                Column {
-                    Greeting("there!!")
-                    Greeting("world!!")
-                    Greeting("earth")
-                }
-                // Places children one after the other. By default if you don't use row they will
-                // overlap
-                Row {
-                    Greeting("there!!")
-                    Greeting("world!!")
-                    Greeting("earth")
-                }
-                // Parameters help give properties to a composable
-                Column (
-                    modifier = Modifier
-                        .height(90.dp)
-                        // This will fill 0.5 i.e 50% of the max width available. If no parameter
-                        // given, it has a default value of 1 i.e it'll take the maximum width.
-                        .fillMaxWidth(0.5f)
-                        .background(Color.DarkGray)
-                        .border(2.dp, Color.Black),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Greeting("there!!")
-                    Greeting("world!!")
-                    Greeting("earth")
-                }
-                // Parameters help give properties to a composable
-                Row (
-                    modifier = Modifier
-                        .height(90.dp)
-                        .fillMaxWidth()
-                        .background(Color.DarkGray)
-                        .border(2.dp, Color.Black),
-                    // Notice how for rows arrangement and alignments are switched.
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Greeting("there!!")
-                    Greeting("world!!")
-                    Greeting("earth")
-                }
+            // Modifiers are applied sequentially. The below code will give you three nested borders
+            // of width 10dp each. The outermost border is black, the innermost border is red and
+            // the one in between is blue.
+            Column(modifier = Modifier
+                // Takes full screen width
+                .fillMaxWidth()
+                // Takes 70% of the screen height
+                .fillMaxHeight(0.7f)
+                // Create a black border of 10dp
+                .border(10.dp, Color.Black)
+                // Applies padding of 10 dp. This means the next border i.e. the blue one has a
+                // padding on 10dp from the view i.e. the column
+                .padding(10.dp)
+                // Creates a blue border of 10dp having padding 10dp
+                .border(10.dp, Color.Blue)
+                // Applies padding of 10 dp. This means the next border i.e. the red one has a
+                // total padding on 20dp from the view i.e. the column
+                .padding(10.dp)
+                // Creates a red border of 10dp having padding 20dp
+                .border(10.dp, Color.Red)
+                // Creates a padding for the content inside the column
+                .padding(10.dp)) {
+                Text(text = "Hello", modifier = Modifier
+                    // Offset is like a margin but it doesn't affect other elements, i.e. it won't
+                    // push the other elements and so can be used to overlap 2 elements
+                    .offset(10.dp, 10.dp)
+                    .border(5.dp, Color.Black)
+                    .padding(5.dp))
+                Text(text = "World", modifier = Modifier
+                    // Note we're giving the same offset as the two texts would overlap if this
+                    // didn't have an offset
+                    .offset(10.dp, 10.dp)
+                    .border(5.dp, Color.Black)
+                    .padding(5.dp))
             }
         }
     }
-}
-
-// This is a composable which is like a view
-@Composable
-fun Greeting(name: String) {
-    // Text() displays some text
-    Text(text = "Hello $name!")
-}
-
-// This is a composable for previewing the Greeting composable in android studio. This has no real
-// use in an app. It is only for the developer to preview
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    Greeting("Android")
 }
